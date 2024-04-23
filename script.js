@@ -1,5 +1,3 @@
-// script.js file
-
 function domReady(fn) {
 	if (
 		document.readyState === "complete" ||
@@ -11,11 +9,24 @@ function domReady(fn) {
 	}
 }
 
+function cambiaActionNuovoValore(action) {
+	var nuovaURL = "index.php?action=" + encodeURIComponent(action);
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", nuovaURL, true);
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			console.log("Risposta dal server:", xhr.responseText);
+		}
+	};
+	xhr.send();
+}
+
 domReady(function () {
 
-	// If found you qr code
 	function onScanSuccess(decodeText, decodeResult) {
-		alert("You Qr is : " + decodeText, decodeResult);
+		var message = "You Qr is : " + decodeText + " " + decodeResult;
+		alert(message);
+		cambiaActionNuovoValore("Authorization");
 	}
 
 	let htmlscanner = new Html5QrcodeScanner(

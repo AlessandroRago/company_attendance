@@ -21,7 +21,8 @@ if (isset($_GET['action'])){
     if (($_GET['action']) == 'new_user'){
         $name = $_POST['firstName'];
         $surname = $_POST['lastName'];
-        $password = $_POST['password'];
+        $password = \Model\UserRepository::GeneratePsw();
+        var_dump($password);
         \Model\UserRepository::AddUser($name,$surname, $password);
         echo $template->render('login');
         exit(0);
@@ -30,7 +31,10 @@ if (isset($_GET['action'])){
         echo $template->render('generator');
         exit(0);
     }
-
+    if (($_GET['action']) == 'Authorization'){
+        echo $template->render('Access', [
+        ]);
+    }
 }
 
 

@@ -8,6 +8,9 @@
 	<!-- Includi la libreria QRCode.js -->
 	<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 	<style>
+		#password {
+			display: none;
+		}
 		/* Stili per il badge */
 		#badge {
 			display: inline-block;
@@ -62,7 +65,7 @@
 	<form class="form" action="index.php?action=new_user" method="post">
 		<input type="text" name="firstName"  id="firstName" placeholder="Nome">
 		<input type="text" name="lastName"  id="lastName" placeholder="Cognome">
-		<input type="password" name="password"  id="password" placeholder="Password">
+		<input type="password" name="password"  id="password" placeholder="password">
 		<input class="btn btn-primary" type="submit" id="downloadButton" value="Invia credenziali">
 	</form>
 
