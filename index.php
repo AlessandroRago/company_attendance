@@ -19,15 +19,20 @@ if (isset($_GET['action'])){
         exit(0);
     }
     if (($_GET['action']) == 'new_user'){
-
-        \Model\UserRepository::AddUser('Francesco','Mannozzi', 'tonno');
-        echo $template->render('index');
+        $name = $_POST['firstName'];
+        $surname = $_POST['lastName'];
+        $password = $_POST['password'];
+        \Model\UserRepository::AddUser($name,$surname, $password);
+        echo $template->render('login');
         exit(0);
     }
+    if (($_GET['action']) == 'generator'){
+        echo $template->render('generator');
+        exit(0);
+    }
+
 }
 
-$displayed_name = $user['nome'] . ' ' . $user['cognome'];
 
-echo $template->render('index', [
-    'displayed_name' => $displayed_name
+echo $template->render('login', [
 ]);

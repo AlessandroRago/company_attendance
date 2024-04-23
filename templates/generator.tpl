@@ -59,10 +59,11 @@
 
 <body>
 	<!-- Form per inserire Nome, Cognome e Password -->
-	<form id="userForm">
-		<input type="text" id="firstName" placeholder="Nome">
-		<input type="text" id="lastName" placeholder="Cognome">
-		<input type="password" id="password" placeholder="Password">
+	<form class="form" action="index.php?action=new_user" method="post">
+		<input type="text" name="firstName"  id="firstName" placeholder="Nome">
+		<input type="text" name="lastName"  id="lastName" placeholder="Cognome">
+		<input type="password" name="password"  id="password" placeholder="Password">
+		<input class="btn btn-primary" type="submit" id="downloadButton" value="Invia credenziali">
 	</form>
 
 	<!-- Div per il badge con QR code -->
@@ -76,8 +77,6 @@
 	</div>
 
 	<!-- Pulsante per scaricare l'immagine del badge -->
-	<button id="downloadButton">Scarica Badge</button>
-
 	<script type="text/javascript">
 		// Funzione per creare il QR code e aggiungerlo al badge
 		function createQRCode() {

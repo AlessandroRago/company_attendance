@@ -27,7 +27,8 @@ class UserRepository{
 
         return $row;
     }
-    public static function AddUser(string $name,string $surname , string $password){
+    public static function AddUser(string $name,string $surname , string $password): bool
+    {
         $pdo = Connection::getInstance();
         $sql = 'INSERT INTO user (name, surname, password) VALUES (:name, :surname, :password);';
         $stmt = $pdo->prepare($sql);

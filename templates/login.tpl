@@ -20,7 +20,7 @@
 			</div>
 
 		</div>
-		<a href="index.php?action=new_user">Add new account</a>
+		<a href="index.php?action=generator">Add new account</a>
 	</div>
 
 	<script
