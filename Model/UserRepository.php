@@ -5,16 +5,16 @@ use Util\Connection;
 
 class UserRepository{
 
-    public static function userAuthentication(string $username, string $password):array|null{
+    public static function userAuthentication(string $id, string $password):array|null{
         $pdo = Connection::getInstance();
-        $sql = 'SELECT * FROM compaby_attendance WHERE name=:username';
+        $sql = 'SELECT * FROM user WHERE id=:id';
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-                'username' => $username
+                'id' => $id
             ]
         );
 
-        //Non esiste un utente con quello username nel database
+        //Non esiste un utente con quell' id nel database
         if($stmt->rowCount() == 0)
             return null;
         //Recupera i dati dell'utente
@@ -26,6 +26,19 @@ class UserRepository{
         //Altrimenti ritorna il vettore contenente i dati dell'utente
 
         return $row;
+    }
+    public static function AddUser(string $name,string $surname , string $password){
+        $pdo = Connection::getInstance();
+        $sql = 'INSERT INTO user (name, surname, password) VALUES (:name, :surname, :password);';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+                'name' => $name,
+                'surname' => $surname,
+                'password' => hash('sha256',$password)
+            ]
+        );
+
+        return true;
     }
 
 }
