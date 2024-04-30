@@ -57,28 +57,73 @@
 			padding: 10px;
 			margin-bottom: 10px;
 		}
-	</style>
+	body {
+		font-family: Arial, sans-serif;
+		background-color: #f2f2f2;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
+	.form {
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+		text-align: center;
+	}
+	.form input {
+		width: 100%;
+		padding: 10px;
+		margin: 5px 0;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+	.form .btn {
+		background-color: #007bff;
+		color: #fff;
+		border: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+		cursor: pointer;
+		transition: background-color 0.3s;
+	}
+	.form .btn:hover {
+		background-color: #0056b3;
+	}
+	#badge {
+		margin-top: 20px;
+		text-align: center;
+	}
+	#badgeText {
+		font-size: 24px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+</style>
 </head>
-
 <body>
-	<!-- Form per inserire Nome, Cognome e Password -->
-	<form class="form" action="index.php?action=new_user" method="post">
-		<input type="text" name="firstName"  id="firstName" placeholder="Nome">
-		<input type="text" name="lastName"  id="lastName" placeholder="Cognome">
-		<input type="password" name="password"  id="password" placeholder="password">
-		<input class="btn btn-primary" type="submit" id="downloadButton" value="Invia credenziali">
-	</form>
+<!-- Form per inserire Nome, Cognome e Password -->
+<form class="form" action="index.php?action=new_user" method="post">
+	<input type="text" name="firstName"  id="firstName" placeholder="Nome">
+	<input type="text" name="lastName"  id="lastName" placeholder="Cognome">
+	<input type="password" name="password"  id="password" placeholder="password">
+	<input class="btn btn-primary" type="submit" id="downloadButton" value="Invia credenziali">
+</form>
 
-	<!-- Div per il badge con QR code -->
-	<div id="badge">
-		<!-- Testo del badge -->
-		<div id="badgeText">
-			Nome Cognome
-		</div>
-		<!-- QR code del badge -->
-		<div id="qrcode"></div>
+<!-- Div per il badge con QR code -->
+<div id="badge">
+	<!-- Testo del badge -->
+	<div id="badgeText">
+		Nome Cognome
 	</div>
-
+	<!-- QR code del badge -->
+	<div id="qrcode"></div>
+</div>
+</body>
 	<!-- Pulsante per scaricare l'immagine del badge -->
 	<script type="text/javascript">
 		// Funzione per creare il QR code e aggiungerlo al badge
