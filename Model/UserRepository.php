@@ -44,7 +44,7 @@ class UserRepository{
 
     public static function GeneratePsw(): string
     {
-        $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz@#][*§';
+        $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz';
         return  substr(str_shuffle($data), 0, 15);
     }
 

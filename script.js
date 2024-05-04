@@ -22,11 +22,27 @@ function cambiaActionNuovoValore(action) {
 }
 
 domReady(function () {
+	function sendAuth(password){
+		const url = 'index.php';
 
+		let data = new URLSearchParams();
+		data.append('password', password);
+
+		const options = {
+			method: `POST`,
+			body: data
+		};
+
+		fetch(url, options)
+			.then(data => {
+				//window.location.href = "index.php"
+			});
+	}
 	function onScanSuccess(decodeText, decodeResult) {
-		var message = "You Qr is : " + decodeText + " " + decodeResult;
-		alert(message);
+		let password = decodeText
 		cambiaActionNuovoValore("Authorization");
+		sendAuth(password)
+
 	}
 
 	let htmlscanner = new Html5QrcodeScanner(

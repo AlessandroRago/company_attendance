@@ -10,6 +10,8 @@ $template = new Engine('templates','tpl');
 //Fa partire il processo di autenticazione
 $user = Authenticator::getUser();
 
+$password = '';
+$password = \Model\UserRepository::GeneratePsw();
 
 
 if (isset($_GET['action'])){
@@ -21,14 +23,16 @@ if (isset($_GET['action'])){
     if (($_GET['action']) == 'new_user'){
         $name = $_POST['firstName'];
         $surname = $_POST['lastName'];
-        $password = \Model\UserRepository::GeneratePsw();
-        var_dump($password);
         \Model\UserRepository::AddUser($name,$surname, $password);
         echo $template->render('login');
         exit(0);
     }
     if (($_GET['action']) == 'generator'){
-        echo $template->render('generator');
+
+        echo $template->render('generator', [
+            'password' => $password
+            ]
+        );
         exit(0);
     }
     if (($_GET['action']) == 'Authorization'){
@@ -36,7 +40,9 @@ if (isset($_GET['action'])){
         ]);
     }
 }
-
+if (isset($_POST['message'])){
+    var_dump($_POST['message']);
+}
 
 echo $template->render('login', [
 ]);

@@ -26,7 +26,7 @@
 	<script
 		src="https://unpkg.com/html5-qrcode">
 	</script>
-	<script src="script.js"></script>
+	<script src="../script.js"></script>
 </body>
 
 </html>
