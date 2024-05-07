@@ -7,6 +7,12 @@ use League\Plates\Engine;
 use Util\Authenticator;
 
 $template = new Engine('templates','tpl');
+var_dump($_POST);
+
+if (isset($_POST['password'])){
+
+}
+
 //Fa partire il processo di autenticazione
 $user = Authenticator::getUser();
 
@@ -39,9 +45,6 @@ if (isset($_GET['action'])){
         echo $template->render('Access', [
         ]);
     }
-}
-if (isset($_POST['message'])){
-    var_dump($_POST['message']);
 }
 
 echo $template->render('login', [
