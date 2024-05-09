@@ -5,40 +5,42 @@ use Util\Connection;
 
 class UserRepository{
 
-    public static function userAuthentication(string $id, string $password):array|null{
+    public static function userAuthentication(string $password):array|null{
         $pdo = Connection::getInstance();
-        $sql = 'SELECT * FROM user WHERE id=:id';
-        $stmt = $pdo->prepare($sql);
+        $sql = 'SELECT * FROM user WHERE id=15;'; //password=:password
+        //$stmt = $pdo->prepare($sql);
+        $stmt = $pdo->query($sql);
+        var_dump($password);
+/*
         $stmt->execute([
-                'id' => $id
+                //'password' => hash('sha256',$password)
+                'password' => $password
             ]
-        );
-
+        );*/
+        var_dump($stmt -> rowCount());
         //Non esiste un utente con quell' id nel database
         if($stmt->rowCount() == 0)
             return null;
         //Recupera i dati dell'utente
         $row = $stmt->fetch();
-        //Verifica che la password corrisponda
-        //Se non corrisponde ritorna null
-        if (!password_verify($password, $row['password']))
-            return null;
-        //Altrimenti ritorna il vettore contenente i dati dell'utente
 
         return $row;
     }
-    public static function AddUser(string $name,string $surname , string $password): bool
+    public static function AddUser(string $name,string $surname): bool
     {
+        $password = $_POST['password'];
+        var_dump($password);
+
         $pdo = Connection::getInstance();
         $sql = 'INSERT INTO user (name, surname, password) VALUES (:name, :surname, :password);';
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
                 'name' => $name,
                 'surname' => $surname,
-                'password' => hash('sha256',$password)
+               // 'password' => hash('sha256',$password)
+                'password' => $password
             ]
         );
-
         return true;
     }
 

@@ -6,18 +6,20 @@ require_once 'conf/config.php';
 use League\Plates\Engine;
 use Util\Authenticator;
 
-$template = new Engine('templates','tpl');
-var_dump($_POST);
-
-if (isset($_POST['password'])){
-
+function page_refresh(){
+    echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+    exit;
 }
 
-//Fa partire il processo di autenticazione
-$user = Authenticator::getUser();
 
-$password = '';
-$password = \Model\UserRepository::GeneratePsw();
+$template = new Engine('templates','tpl');
+
+//Fa partire il processo di autenticazione
+
+//var_dump($user);
+
+
+
 
 
 if (isset($_GET['action'])){
@@ -29,12 +31,13 @@ if (isset($_GET['action'])){
     if (($_GET['action']) == 'new_user'){
         $name = $_POST['firstName'];
         $surname = $_POST['lastName'];
-        \Model\UserRepository::AddUser($name,$surname, $password);
+        \Model\UserRepository::AddUser($name,$surname);
         echo $template->render('login');
+        page_refresh();
         exit(0);
     }
     if (($_GET['action']) == 'generator'){
-
+        $password = \Model\UserRepository::GeneratePsw();
         echo $template->render('generator', [
             'password' => $password
             ]
@@ -42,8 +45,13 @@ if (isset($_GET['action'])){
         exit(0);
     }
     if (($_GET['action']) == 'Authorization'){
-        echo $template->render('Access', [
-        ]);
+        $user = Authenticator::getUser();
+        if ($user != null) {
+            echo "Funziona";
+            echo $template->render('index', [
+                'user' => $user
+            ]);
+        }
     }
 }
 

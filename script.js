@@ -20,6 +20,17 @@ function cambiaActionNuovoValore(action) {
 	};
 	xhr.send();
 }
+function prova(password) {
+	var nuovaURL = "index.php/?action=Authorization";
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", nuovaURL, true);
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			console.log("Risposta dal server:", xhr.responseText);
+		}
+	};
+	xhr.send(password);
+}
 
 domReady(function () {
 	function sendAuth(password){
@@ -29,6 +40,10 @@ domReady(function () {
 		data.append('password', password);
 
 		const options = {
+			headers: {
+				'Accept': 'text/html',
+				'Content-Type': 'text/html'
+			},
 			method: `POST`,
 			body: data
 		};
@@ -38,10 +53,13 @@ domReady(function () {
 				//window.location.href = "index.php"
 			});
 	}
-	function onScanSuccess(decodeText, decodeResult) {
+	function onScanSuccess(decodeText) {
 		let password = decodeText
-		cambiaActionNuovoValore("Authorization");
-		sendAuth(password)
+		console.log(password)
+		//cambiaActionNuovoValore("Authorization");
+		//sendAuth(password)
+		prova(password)
+		window.location.href = "index.php?action=Authorization"
 
 	}
 

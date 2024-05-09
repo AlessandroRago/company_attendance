@@ -65,7 +65,7 @@
 <form class="form" action="index.php?action=new_user" method="post">
     <input type="text" name="firstName"  id="firstName" placeholder="Nome">
     <input type="text" name="lastName"  id="lastName" placeholder="Cognome">
-    <input type="password" name="password"  id="password" placeholder="password">
+    <input type="text" name="password"  id="password" placeholder="password" value="<?=$password?>">
     <input class="btn btn-primary" type="submit" id="downloadButton" value="Invia credenziali">
 </form>
 <div hidden="hidden" id="psw">
