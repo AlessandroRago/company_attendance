@@ -59,7 +59,12 @@ domReady(function () {
 		//cambiaActionNuovoValore("Authorization");
 		//sendAuth(password)
 		prova(password)
-		window.location.href = "index.php?action=Authorization"
+		if (window.location.href.includes("index.php?mode=enter")) {
+			window.location.href = "index.php?action=Authorization&mode=enter"
+		}
+		else {
+			window.location.href = "index.php?action=Authorization&mode=exit"
+		}
 
 	}
 

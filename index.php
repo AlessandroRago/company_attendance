@@ -6,13 +6,23 @@ require_once 'conf/config.php';
 use League\Plates\Engine;
 use Util\Authenticator;
 
-function page_refresh(){
-    echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+function page_refresh($mode){
+    echo "<meta http-equiv='refresh' content='0;url=index.php?mode=".$mode."'>";
     exit;
 }
 
 
 $template = new Engine('templates','tpl');
+$mode = 'enter';
+
+if(isset($_GET['mode'])) {
+    if (($_GET['mode']) == 'exit'){
+        $mode = 'exit';
+    }
+    if (($_GET['mode']) == 'enter'){
+        $mode = 'enter';
+    }
+}
 
 //Fa partire il processo di autenticazione
 
@@ -27,7 +37,7 @@ if (isset($_GET['action'])){
         $surname = $_POST['lastName'];
         \Model\UserRepository::AddUser($name,$surname);
         echo $template->render('login');
-        page_refresh();
+        page_refresh($mode);
         exit(0);
     }
     if (($_GET['action']) == 'generator'){
@@ -41,12 +51,20 @@ if (isset($_GET['action'])){
     if (($_GET['action']) == 'Authorization'){
         $user = Authenticator::getUser();
         if ($user != null) {
-            echo $template->render('index', [
-                'user' => $user
-            ]);
+
+            if (($_GET['mode']) == 'exit'){
+                \Model\UserRepository::exit($user);
+            }
+            if (($_GET['mode']) == 'enter'){
+                \Model\UserRepository::enter($user);
+            }
+            page_refresh($mode);
         }
+
     }
 }
 
+
 echo $template->render('login', [
+    'mode' => $mode
 ]);
