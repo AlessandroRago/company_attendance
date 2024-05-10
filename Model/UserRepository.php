@@ -7,24 +7,17 @@ class UserRepository{
 
     public static function userAuthentication(string $password):array|null{
         $pdo = Connection::getInstance();
-        $sql = 'SELECT * FROM user WHERE id=15;'; //password=:password
-        //$stmt = $pdo->prepare($sql);
-        $stmt = $pdo->query($sql);
-        var_dump($password);
-/*
+        $sql = 'SELECT * FROM user WHERE password=:password;';
+        $stmt = $pdo->prepare($sql);
         $stmt->execute([
-                //'password' => hash('sha256',$password)
-                'password' => $password
+                'password' => hash('sha256',$password)
             ]
-        );*/
-        var_dump($stmt -> rowCount());
+        );
         //Non esiste un utente con quell' id nel database
         if($stmt->rowCount() == 0)
             return null;
         //Recupera i dati dell'utente
-        $row = $stmt->fetch();
-
-        return $row;
+        return $stmt->fetch();
     }
     public static function AddUser(string $name,string $surname): bool
     {
@@ -37,8 +30,8 @@ class UserRepository{
         $stmt->execute([
                 'name' => $name,
                 'surname' => $surname,
-               // 'password' => hash('sha256',$password)
-                'password' => $password
+                'password' => hash('sha256',$password)
+
             ]
         );
         return true;

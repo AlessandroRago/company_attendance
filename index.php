@@ -16,12 +16,6 @@ $template = new Engine('templates','tpl');
 
 //Fa partire il processo di autenticazione
 
-//var_dump($user);
-
-
-
-
-
 if (isset($_GET['action'])){
     if (($_GET['action']) == 'logout'){
         Authenticator::logout();
@@ -47,7 +41,6 @@ if (isset($_GET['action'])){
     if (($_GET['action']) == 'Authorization'){
         $user = Authenticator::getUser();
         if ($user != null) {
-            echo "Funziona";
             echo $template->render('index', [
                 'user' => $user
             ]);

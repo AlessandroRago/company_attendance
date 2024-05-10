@@ -20,6 +20,7 @@
 			</div>
 		</div>
 	</div>
+	<p><?=$user['name']?></p>
 	<script
 		src="https://unpkg.com/html5-qrcode">
 	</script>

@@ -32,7 +32,6 @@ class Authenticator{
             //Verifica se le credenziali sono corrette
             $row = UserRepository::userAuthentication($password);
 
-
             //Se non sono valide ritorna false
             if ($row != null) {
                 //Memorizza nelle variabili di sessione tutti gli

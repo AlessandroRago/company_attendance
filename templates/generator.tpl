@@ -68,9 +68,7 @@
     <input type="text" name="password"  id="password" placeholder="password" value="<?=$password?>">
     <input class="btn btn-primary" type="submit" id="downloadButton" value="Invia credenziali">
 </form>
-<div hidden="hidden" id="psw">
-    <?=$password?>
-</div>
+<div hidden="hidden" id="psw"><?=$password?></div>
 <!-- Div per il badge con QR code -->
 <div id="badge">
     <!-- Testo del badge -->
