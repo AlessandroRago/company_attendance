@@ -103,7 +103,7 @@ WHERE workshift_id = (SELECT id
         );
         $row = $stmt->fetch();
         var_dump($row);
-        if ($row['exit_id'] != null) {
+        if ($row['exit_id'] != null || !$row) {
 
             $sql = 'INSERT INTO entrance (time,user_id) VALUES (:time, :user_id);';
             $stmt = $pdo->prepare($sql);
@@ -177,5 +177,24 @@ AND entrance_id = (SELECT MAX(id)
             return false;
         }
 
+    }
+    public static function dailyRoutine()
+    {
+
+        $pdo = Connection::getInstance();
+        $sql = 'SELECT id FROM user';
+        $stmt = $pdo->query($sql);
+        $all_id = $stmt ->fetchAll();
+        foreach ($all_id as $id) {
+            $insert = 'INSERT INTO workshift (date,user_id)
+SELECT CURRENT_DATE, :user_id
+WHERE NOT EXISTS (SELECT * FROM workshift WHERE date = CURRENT_DATE AND user_id = :user_id)';
+            $stmt = $pdo->prepare($insert);
+            $stmt->execute([
+                    'user_id' => $id['id']
+                ]
+            );
+        }
+        return true;
     }
 }

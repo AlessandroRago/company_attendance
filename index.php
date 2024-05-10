@@ -11,9 +11,10 @@ function page_refresh($mode){
     exit;
 }
 
-
+\Model\UserRepository::dailyRoutine();
 $template = new Engine('templates','tpl');
 $mode = 'enter';
+
 
 if(isset($_GET['mode'])) {
     if (($_GET['mode']) == 'exit'){
@@ -58,7 +59,7 @@ if (isset($_GET['action'])){
             if (($_GET['mode']) == 'enter'){
                 \Model\UserRepository::enter($user);
             }
-            page_refresh($mode);
+         //   page_refresh($mode);
         }
 
     }
