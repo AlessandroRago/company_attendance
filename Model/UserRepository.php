@@ -40,7 +40,21 @@ class UserRepository{
     public static function GeneratePsw(): string
     {
         $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz';
-        return  substr(str_shuffle($data), 0, 15);
+        $password =  substr(str_shuffle($data), 0, 15);
+        $pdo = Connection::getInstance();
+        $sql = 'SELECT password FROM user WHERE password=:password;';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+                'password' => hash('sha256',$password)
+            ]
+        );
+        if($stmt->rowCount() == 0) {
+            return  $password;
+        }
+        else {
+            return self::GeneratePsw();
+        }
+
     }
 
     public static function getId(string $name, string $password): int{
