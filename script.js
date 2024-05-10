@@ -1,3 +1,4 @@
+
 function domReady(fn) {
 	if (
 		document.readyState === "complete" ||
@@ -56,14 +57,61 @@ domReady(function () {
 	function onScanSuccess(decodeText) {
 		let password = decodeText
 		console.log(password)
-		//cambiaActionNuovoValore("Authorization");
-		//sendAuth(password)
-		prova(password)
-		if (window.location.href.includes("index.php?mode=enter")) {
-			window.location.href = "index.php?action=Authorization&mode=enter"
+
+		if (window.location.href.includes("index.php?mode=exit")) {
+			// Creazione dell'overlay
+			var overlay = document.createElement('div');
+			overlay.id = 'overlay';
+
+			// Creazione del form
+			var form = document.createElement('form');
+			form.id = 'exitForm';
+			form.action = 'index.php?action=Authorization&mode=exit'
+			form.method = "post"
+			// Aggiunta dei campi al form
+			var selectJust = document.getElementById("justificationSelect");
+			selectJust.hidden = false;
+			//selectJust.type = 'text';
+			selectJust.name = 'justification';
+			selectJust.className = "button"
+			//selectJust.placeholder = "1";
+let pls = document.createElement("a");
+			var submitButton = document.createElement('input');
+			submitButton.type = 'submit';
+			submitButton.className = "button"
+			submitButton.value = 'Invia';
+			pls.appendChild(submitButton)
+			pls.onclick = function() {
+				// Rimuovere l'overlay quando si fa clic sul link di chiusura
+				prova(password)
+				return false; // Per impedire il comportamento predefinito del link
+			};
+			// Aggiunta dei campi al form
+			form.appendChild(selectJust);
+			form.appendChild(submitButton);
+
+			// Creazione del link di chiusura
+			var closeButton = document.createElement('a');
+			closeButton.textContent = 'Close';
+			closeButton.onclick = function() {
+				// Rimuovere l'overlay quando si fa clic sul link di chiusura
+				overlay.remove();
+				window.location.href="index.php?mode=exit"
+				return false; // Per impedire il comportamento predefinito del link
+			};
+
+			// Aggiunta del link di chiusura al form
+			form.appendChild(closeButton);
+
+			// Aggiunta del form all'overlay
+			overlay.appendChild(form);
+
+			// Aggiunta dell'overlay al body del documento
+			document.body.appendChild(overlay);
 		}
 		else {
-			window.location.href = "index.php?action=Authorization&mode=exit"
+			prova(password)
+			window.location.href = "index.php?action=Authorization&mode=enter"
 		}
 
 	}

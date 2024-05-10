@@ -51,15 +51,17 @@ if (isset($_GET['action'])){
     }
     if (($_GET['action']) == 'Authorization'){
         $user = Authenticator::getUser();
+        \Model\UserRepository::AddImmobile();
         if ($user != null) {
 
             if (($_GET['mode']) == 'exit'){
                 \Model\UserRepository::exit($user);
+
             }
             if (($_GET['mode']) == 'enter'){
                 \Model\UserRepository::enter($user);
             }
-         //   page_refresh($mode);
+            page_refresh($mode);
         }
 
     }

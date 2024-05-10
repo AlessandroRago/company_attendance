@@ -134,7 +134,7 @@ VALUES ((SELECT MAX(id)
     {
         $pdo = Connection::getInstance();
         $sql = '
-SELECT exit_id
+SELECT exit_id, worktime.id
 FROM worktime
 INNER JOIN workshift ON worktime.workshift_id = workshift.id
 WHERE workshift.date = CURDATE() AND
@@ -147,13 +147,14 @@ WHERE workshift_id = (SELECT id FROM workshift WHERE user_id = :id)) as a) = ent
             ]
         );
         $row = $stmt->fetch();
-        if ($row['exit_id'] == null) {
+        if ($row['exit_id'] == null and $row['id'] != null) {
 
-            $sql = 'INSERT INTO company_attendance.exit (time,user_id,justification_id) VALUES (:time, :user_id,1);';
+            $sql = 'INSERT INTO company_attendance.exit (time,user_id,justification_id) VALUES (:time, :user_id,:justification);';
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                     'time' => date('H:i:s'),
                     'user_id' => $user['id'],
+                    'justification' => $_POST['justification']
                 ]
             );
             $sql = 'UPDATE worktime 
@@ -195,6 +196,19 @@ WHERE NOT EXISTS (SELECT * FROM workshift WHERE date = CURRENT_DATE AND user_id 
                 ]
             );
         }
+        $justifications = self::getJustifications();
+        echo '<select id="justificationSelect" hidden="hidden">';
+        foreach ($justifications as $justification) {
+            echo '<option value="'.$justification['id'].'">'.$justification['description'].'</option>';
+        }
+        echo '</select>';
         return true;
     }
+    public static function getJustifications(): array{
+        $pdo = Connection::getInstance();
+        $sql = 'SELECT * FROM justifications';
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll();
+    }
+
 }
