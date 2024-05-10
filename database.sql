@@ -29,7 +29,7 @@ CREATE TABLE `entrance` (
   PRIMARY KEY (`id`),
   KEY `entrance___fk` (`user_id`),
   CONSTRAINT `entrance___fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `entrance` (
 
 LOCK TABLES `entrance` WRITE;
 /*!40000 ALTER TABLE `entrance` DISABLE KEYS */;
-INSERT INTO `entrance` VALUES (1,'08:00:00',19),(2,'14:00:00',19);
+INSERT INTO `entrance` VALUES (1,'08:00:00',19),(2,'14:00:00',19),(3,'13:11:56',20),(4,'13:34:23',19),(5,'14:53:48',19),(6,'15:09:59',19),(7,'15:12:18',20);
 /*!40000 ALTER TABLE `entrance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `exit` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `justification_id` FOREIGN KEY (`justification_id`) REFERENCES `justifications` (`id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `exit` (
 
 LOCK TABLES `exit` WRITE;
 /*!40000 ALTER TABLE `exit` DISABLE KEYS */;
-INSERT INTO `exit` VALUES (1,'12:00:00',19,1,NULL),(2,'18:00:00',19,2,NULL);
+INSERT INTO `exit` VALUES (1,'12:00:00',19,1,NULL),(2,'18:00:00',19,2,NULL),(3,'14:37:51',19,1,NULL),(4,'14:38:37',20,1,NULL),(5,'14:55:14',19,1,NULL),(6,'15:10:04',19,1,NULL),(7,'15:12:24',20,1,NULL);
 /*!40000 ALTER TABLE `exit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +111,7 @@ CREATE TABLE `user` (
   `password` varchar(100) DEFAULT NULL,
   `hourly_rate` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (19,'Francesco','Mannozzi','0634c61494d47fb856164924ab37bee37d48fc449a6b7a8b2b77e09065991ae1',8.5),(20,'Riccardo','Nulli','4eb6b0b367171b91f30f49c59514eada9039e311a815d4b0bed09f87667be2da',10),(21,'','','8e02212c387121a563bfd1d11a44ef8d668caec684cefca302bf5f912eb90691',NULL),(23,'Ciro','Immobile','Dvg9ONiBKhQMbVC',NULL);
+INSERT INTO `user` VALUES (19,'Francesco','Mannozzi','0634c61494d47fb856164924ab37bee37d48fc449a6b7a8b2b77e09065991ae1',8.5),(20,'Riccardo','Nulli','4eb6b0b367171b91f30f49c59514eada9039e311a815d4b0bed09f87667be2da',10);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,12 +191,12 @@ CREATE TABLE `worktime` (
   UNIQUE KEY `worktime_pk` (`id`,`entrance_id`),
   UNIQUE KEY `worktime_pk_2` (`id`,`exit_id`),
   KEY `worktime_entrance_id_fk` (`entrance_id`),
-  KEY `worktime_exit_id_fk` (`exit_id`),
   KEY `worktime_workshift_id_fk` (`workshift_id`),
+  KEY `worktime_exit_id_fk` (`exit_id`),
   CONSTRAINT `worktime_entrance_id_fk` FOREIGN KEY (`entrance_id`) REFERENCES `entrance` (`id`),
   CONSTRAINT `worktime_exit_id_fk` FOREIGN KEY (`exit_id`) REFERENCES `exit` (`id`),
   CONSTRAINT `worktime_workshift_id_fk` FOREIGN KEY (`workshift_id`) REFERENCES `workshift` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `worktime` (
 
 LOCK TABLES `worktime` WRITE;
 /*!40000 ALTER TABLE `worktime` DISABLE KEYS */;
-INSERT INTO `worktime` VALUES (1,1,1,1),(2,2,2,1);
+INSERT INTO `worktime` VALUES (1,1,1,1),(2,2,2,1),(3,3,3,2),(4,4,4,1),(5,5,5,1),(6,6,6,1),(7,7,7,2);
 /*!40000 ALTER TABLE `worktime` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -218,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-10 14:32:47
+-- Dump completed on 2024-05-10 18:03:10
