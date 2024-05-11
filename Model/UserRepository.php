@@ -19,16 +19,17 @@ class UserRepository{
         //Recupera i dati dell'utente
         return $stmt->fetch();
     }
-    public static function AddUser(string $name,string $surname): bool
+    public static function AddUser(string $name,string $surname, $hourlyWage): bool
     {
         $password = $_POST['password'];
         $pdo = Connection::getInstance();
-        $sql = 'INSERT INTO user (name, surname, password) VALUES (:name, :surname, :password);';
+        $sql = 'INSERT INTO user (name, surname, password, hourly_rate) VALUES (:name, :surname, :password, :hourly_rate);';
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
                 'name' => $name,
                 'surname' => $surname,
-                'password' => hash('sha256',$password)
+                'password' => hash('sha256',$password),
+                'hourly_rate' => $hourlyWage
 
             ]
         );
@@ -52,17 +53,6 @@ class UserRepository{
         else {
             return self::GeneratePsw();
         }
-    }
-    public static function getId(string $name, string $password): int{
-        $pdo = Connection::getInstance();
-        $sql = 'SELECT id FROM company_attendance.user WHERE name = :name AND password = :password ';
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-                'name' => $name,
-                'password' => $password,
-            ]
-        );
-        return $stmt->fetchAll();
     }
 
     public static function AddImmobile(): bool
@@ -140,7 +130,7 @@ INNER JOIN workshift ON worktime.workshift_id = workshift.id
 WHERE workshift.date = CURDATE() AND
 ((SELECT MAX(a.entrance_id) FROM (SELECT entrance_id FROM worktime
 INNER JOIN workshift ON worktime.workshift_id = workshift.id
-WHERE workshift_id = (SELECT id FROM workshift WHERE user_id = :id)) as a) = entrance_id);';
+WHERE workshift_id = (SELECT id FROM workshift WHERE user_id = :id AND  workshift.date = CURRENT_DATE())) as a) = entrance_id);';
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
                 'id' => $user['id']

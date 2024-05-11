@@ -36,7 +36,8 @@ if (isset($_GET['action'])){
     if (($_GET['action']) == 'new_user'){
         $name = $_POST['firstName'];
         $surname = $_POST['lastName'];
-        \Model\UserRepository::AddUser($name,$surname);
+        $hourlyWage = $_POST['hourlyWage'];
+        \Model\UserRepository::AddUser($name,$surname, $hourlyWage);
         echo $template->render('login');
         page_refresh($mode);
         exit(0);
@@ -51,7 +52,6 @@ if (isset($_GET['action'])){
     }
     if (($_GET['action']) == 'Authorization'){
         $user = Authenticator::getUser();
-        \Model\UserRepository::AddImmobile();
         if ($user != null) {
 
             if (($_GET['mode']) == 'exit'){
