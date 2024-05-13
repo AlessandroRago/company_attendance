@@ -1,0 +1,16 @@
+{
+    "name": "vendor_name/autenticazione",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "GPL-2.0-only",
+    "require": {
+        "league/plates": "^3.4",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Util\\": "Util/",
+            "Model\\": "Model/"
+        }
+    }
+}

@@ -26,12 +26,12 @@ class Authenticator{
         self::start();
         //Controllo se è in corso un tentativo di login
         //verificando la presenza dello username spedito tramite POST
-        if (isset($_POST['username'])){
-            $username = $_POST['username'];
-            $password = $_POST['password'];
 
+        if (file_get_contents('php://input') !== null){
+            $password = file_get_contents('php://input');
             //Verifica se le credenziali sono corrette
-            $row = UserRepository::userAuthentication($username, $password);
+            $row = UserRepository::userAuthentication($password);
+
             //Se non sono valide ritorna false
             if ($row != null) {
                 //Memorizza nelle variabili di sessione tutti gli

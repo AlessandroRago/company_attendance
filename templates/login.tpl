@@ -20,13 +20,19 @@
 			</div>
 
 		</div>
-		<a href="index.php?action=generator">Add new account</a>
+		<a class="button" href="index.php?action=generator">Add new account</a>
+		<?php if($mode == 'exit'): ?>
+		<a class="button" href="index.php?mode=enter">Switch to enter mode</a>
+		<?php endif;?>
+		<?php if($mode == 'enter'): ?>
+		<a class="button" href="index.php?mode=exit">Switch to EXIT mode</a>
+		<?php endif;?>
 	</div>
 
 	<script
 		src="https://unpkg.com/html5-qrcode">
 	</script>
-	<script src="script.js"></script>
+	<script src="../script.js"></script>
 </body>
 
 </html>
